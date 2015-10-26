@@ -191,6 +191,23 @@ public:
     else
       return ret || false;
   }
+
+  void  printMaximumOnPath(TreeNode * root, int val){
+    if(!root)	
+	return;
+
+    if(!root->left && !root->right){
+	cout<<"Maximum value for path ended "<<root->val<<" is "
+	    <<(val > root->val ? val : root->val)<<endl; 
+	return;
+    }
+    else{
+	// print both two subtrees:
+	int v = root->val > val ? root->val : val;
+	printMaximumOnPath(root->left, v);
+	printMaximumOnPath(root->right, v);
+    }
+  }
 };
 
 int main(int argc, char** argv){
@@ -227,6 +244,8 @@ int main(int argc, char** argv){
   else
     cout<<"Lowest common ancestor for those two nodes is: "<<ans->val<<endl;
   
+  cout<<"Printing the maximum num for each path from root to leaf: "<<endl;
+  S.printMaximumOnPath(root, INT_MIN);
   free(arr);
   return 0;
 
