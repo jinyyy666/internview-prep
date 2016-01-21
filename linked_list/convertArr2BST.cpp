@@ -112,6 +112,40 @@ public:
     }
     return cur->val;
   }
+  
+  // find the left most child of a BST:
+  int getMin(TreeNode * root){
+    TreeNode * cur = root;
+    if(!cur) return INT_MAX;
+    while(cur->left)
+      cur = cur->left;
+    return cur->val;
+  }
+
+  // a more accurate version of isBST:
+  bool isBST(TreeNode * root){
+    if(!root)  return true;
+    
+    if(root->left && getMax(root->left) > root->val)
+      return false;
+    if(root->right && getMin(root->right) <= root->val)
+      return false;
+    return (isBST(root->left) && isBST(root->right));
+  }
+
+  bool isBST2(TreeNode * root){
+    return isBSTUtil(root, INT_MIN, INT_MAX);
+  }
+
+  bool isBSTUtil(TreeNode * root, int min, int max){
+    if(!root)  return true;
+
+    if(root->val < min || root->val > max)
+      return false;
+
+    return (isBSTUtil(root->left, min, root->val) && isBSTUtil(root->right, root->val+1, max));
+    
+  }
 
   // find the second max in the BST:
   int getSecondMax(TreeNode * root){
@@ -224,11 +258,16 @@ int main(int argc, char** argv){
   TreeNode * root = S.sortedArrToBST(arr, argc -1);
   S.print(root);
 
-  cout<<"Verify the BST: "<<S.verify(root)<<endl;
-
+  cout<<"isBST? "<<S.isBST(root)<<endl;
   //cout<<"Maximum number of the BST: "<<S.maxNum(root)<<endl;
 
+  cout<<"Get the maximum number for the left subtree of the root: "<<S.getMax(root->left)<<endl;
+
   cout<<"Get the maximum number of the BST: "<<S.getMax(root)<<endl;
+
+  cout<<"Verify the BST: "<<S.verify(root)<<endl;
+  
+  
 
   cout<<"The second maximum number of the BST: "<<S.getSecondMax(root)<<endl;
 
