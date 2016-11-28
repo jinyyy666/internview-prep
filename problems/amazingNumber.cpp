@@ -43,7 +43,7 @@ public:
 	shift[i+1]++;
 	// determine the end of the range, if nums[i] == i+1, end of the range is in index = n, note that the end is a open range! then we do not need to keep track of 
 	// also note that in this case the end range cannot be on the left of the current number!
-	if(nums[i] > i+1)  shift[n-1 -(nums[i] - i+1) + 1]--;
+	if(nums[i] > i+1)  shift[n-(nums[i] - (i+1))]--;
       }
       else{
 	// two ranges exists in this case! one starts from 0 to i-nums[i]+1, the other starts from i+1
